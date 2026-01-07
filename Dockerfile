@@ -15,8 +15,8 @@ WORKDIR /var/www
 # Copiar los archivos del proyecto
 COPY . . 
 
-# 3. Instalar dependencias de PHP (genera la carpeta vendor en Render)
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# 3. Instalar dependencias de PHP (QUITAMOS EL --no-dev PARA QUE FUNCIONE EL FAKE)
+RUN composer install --optimize-autoloader --no-interaction
 
 # 4. Instalar dependencias de Node y compilar assets (Vite)
 RUN npm install 
@@ -28,6 +28,5 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 # Exponer el puerto configurado
 EXPOSE 8000 
 
-# 6. COMANDO FINAL: Ejecuta migraciones automáticamente y luego arranca el servidor
-# Cambia la última línea por esta si quieres ejecutar los seeders:
+# 6. COMANDO FINAL
 CMD php artisan migrate:fresh --seed --force && php artisan serve --host=0.0.0.0 --port=8000
