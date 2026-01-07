@@ -29,4 +29,5 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 EXPOSE 8000 
 
 # 6. COMANDO FINAL: Ejecuta migraciones automáticamente y luego arranca el servidor
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+# Cambia la última línea por esta si quieres ejecutar los seeders:
+CMD php artisan migrate:fresh --seed --force && php artisan serve --host=0.0.0.0 --port=8000
