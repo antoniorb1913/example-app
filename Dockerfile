@@ -14,6 +14,8 @@ WORKDIR /var/www
 # Copiar los archivos del proyecto
 COPY . . 
 
+# ESTA ES LA CLAVE: Docker descarga las librerías dentro del servidor de Render
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Instalar dependencias de Node
 RUN npm install 
