@@ -9,8 +9,8 @@ class PlayerApiController extends Controller
     //
 
     public function list(){
-         $players = Player::all();
-         return response()->json([
+        $players = Player::all();
+        return response()->json([
             'status' => true,
             'message' => 'Prueba',
             'data' => $players
