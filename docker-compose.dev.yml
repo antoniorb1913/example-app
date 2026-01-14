@@ -21,7 +21,6 @@ services:
     ports:
       - "8080:8000"
     environment:
-      # IMPORTANTE: Aquí cambiamos localhost por el nombre del servicio 'db-dev'
       DB_CONNECTION: pgsql
       DB_HOST: db-dev 
       DB_PORT: 5432
