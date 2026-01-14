@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
+set -e  # <--- AÑADE ESTO: Detiene el script si un comando falla
+
 echo "Running composer"
-composer install --no-dev --working-dir=/var/www/html
+# Verifica que la ruta /var/www/html sea la correcta en tu entorno de Render
+composer install --no-dev --optimize-autoloader
 
 echo "Caching config..."
 php artisan config:cache
