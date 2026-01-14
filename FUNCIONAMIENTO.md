@@ -17,12 +17,13 @@
 4. **Migraciones y Datos de prueba** Ejecuta el siguiente comando en tu terminal para crear las tablas y cargar los jugadores de ejemplo:
    
    ```bash
-   php artisan migrate --seed
+   php artisan migrate:fresh --seed
 
 5. **Levantar docker-compose.local.yml** levantar el docker local para que carge el contenedor de postgres de la base de datos.
+   - Asegúrate de que el puerto de la base de datos en el .env coincida con el del docker-compose.local.yml (5432)
 
    ```bash
-   docker compose -f docker-compose.local.yml up --build -d
+   docker compose -f docker-compose.local.yml up --build
 
   
 6. **Acceso y Verificación Entramos a la URL** y el programa esta arrancado y funcionando.
@@ -52,8 +53,21 @@
    ```bash
    docker compose -f docker-compose.dev.yml up --build -d
 
+- Para que el entorno dev funcione hace falta el archivo .dockerignore para que ignore las variable de entorno locales y no intente conectarse a ellas y el Dockerfile.
+
 - Entrar a la ruta http://localhost:8080/players y deberia funcinar correctamnete
 
 ## RENDER
-    - Enlace de render:
+
+   - Crear un servicio de postgres y otro servicio web services.
+     - Ponemos las variables que apunten al servicio de postgres creado en render
+   
+   ![ilustracion 6](Image/variables-render.png)
+
+
+   - Funcionamiento de render.
+  
+  ![ilustracion 6](Image/render.png)
+
+  - Enlace de render:
       - https://example-app-gsfk.onrender.com
