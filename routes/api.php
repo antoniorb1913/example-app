@@ -8,4 +8,3 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/player',[PlayerApiController::class, "list"]);
 
-Route::put('/players/{player}', [PlayerApiController::class, 'update']);
