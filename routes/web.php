@@ -3,6 +3,7 @@
 use App\Http\Controllers\PlayerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return redirect()->route('players.index');
@@ -10,18 +11,16 @@ Route::get('/', function () {
 
 Route::resource('players', PlayerController::class);
 
-Route::get('/setup-db', function () {
+Route::get('/setup-final', function () {
     try {
-        // Forzamos el cierre de cualquier transacción previa y limpiamos todo
-        // migrate:fresh borra todas las tablas y las crea desde cero
-        Artisan::call('migrate:fresh', [
-            '--force' => true,
-            '--seed' => true // Esto ejecuta los seeders automáticamente después de migrar
-        ]);
-
-        return "¡Éxito! Base de datos limpiada, tablas creadas y datos cargados.";
+        // Cerramos conexiones previas bloqueadas
+        DB::disconnect(); 
+        
+        // migrate:fresh borra las tablas con error y las crea de nuevo
+        Artisan::call('migrate:fresh', ['--force' => true, '--seed' => true]);
+        
+        return "¡Práctica completada con éxito! Tablas creadas y datos cargados en Neon.";
     } catch (\Exception $e) {
-        // Si falla, nos dirá exactamente por qué
-        return "Error detallado: " . $e->getMessage();
+        return "Error: " . $e->getMessage();
     }
 });
