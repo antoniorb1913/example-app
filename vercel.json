@@ -11,7 +11,7 @@
         }
     ],
     "env": {
-        "APP_ENV": "local",
+        "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "http://prueba.test",
         "APP_KEY": "base64:B2Sjb+pLOMlO+Dx4AZT+o7h4R+Ip+nBJEOt5Hag+kMU=",
