@@ -13,7 +13,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "http://prueba.test",
+        "APP_URL": "https://example-app-antoniorb1913-antonios-projects-70787aa3.vercel.app",
         "APP_KEY": "base64:B2Sjb+pLOMlO+Dx4AZT+o7h4R+Ip+nBJEOt5Hag+kMU=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
