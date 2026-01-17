@@ -18,10 +18,10 @@
       
      ### 3. Añade este contenido dentro de la carpeta index.php:
    
-         ```php
-               <?php
-               require __DIR__ . '/../public/index.php';
-         ```
+      ```php
+            <?php
+            require __DIR__ . '/../public/index.php';
+      ```
 
       - **¿Qué hace?** Redirige todas las peticiones que recibe Vercel hacia el archivo principal de Laravel en la carpeta public.
       
@@ -29,9 +29,9 @@
 
      ### 4. Crear .vercelignore: Crea este archivo en la raíz y añade:
       
-         ```bash
-               /vendor
-         ```
+      ```bash
+            /vendor
+      ```
       - **¿Qué hace?** Evita que subas la carpeta de dependencias a Vercel; la plataforma las instalará automáticamente durante el despliegue.
   
       <br>
