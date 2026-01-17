@@ -6,7 +6,9 @@
 
 ## PREPARACION Y CONFIGURACION EL PROYECTO:
 
-   - Funte sacada de "Medium" https://rezamandala.medium.com/how-to-deploy-laravel-project-to-vercel-7b3c2800e974
+   - Funtes sacadas de "Medium" 
+     - https://rezamandala.medium.com/how-to-deploy-laravel-project-to-vercel-7b3c2800e974
+     - https://cvallejo.medium.com/laravel-vercel-serverless-de-forma-simple-y-gratuita-d370f294530f
   
      ### 1. Crea una carpeta "api" en la raiz del proyecto.
 
@@ -16,7 +18,7 @@
       
       <br>
       
-     ### 3. Añade este contenido dentro de la carpeta index.php:
+     ### 3. Añade este contenido dentro de la carpeta **index.php**:
    
       ```php
             <?php
@@ -27,7 +29,7 @@
       
       <br>
 
-     ### 4. Crear .vercelignore: Crea este archivo en la raíz y añade:
+     ### 4. Crear **.vercelignore**: Crea este archivo en la raíz y añade:
       
       ```bash
             /vendor
