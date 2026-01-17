@@ -159,7 +159,7 @@
          2. Damos en "Add Environment Variable".
          3. Añadimos las variables para conectarnos con la base de datos.
 
-      ![ilustracion 2](Image/vercel/variables.png)
+      ![ilustracion 3](Image/vercel/variables.png)
 
       - Variables.
 
@@ -180,3 +180,10 @@
          <br>
       
       Pequeño inciso esto se puede poner tambien en el archivo "**.env**" o el el archivo "**vercel.json**" la cosa que configurar las variables en el panel de Vercel evita filtrar contraseñas en el historial de Git y permite mantener las credenciales locales del .env totalmente separadas de las de producción.
+
+
+      Visualizacion del despligue.
+
+      https://example-lo3dryhuk-antonios-projects-70787aa3.vercel.app
+
+      ![ilustracion 4](Image/vercel/despliegue.png)
