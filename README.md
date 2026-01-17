@@ -191,6 +191,6 @@
       ![ilustracion 4](Image/vercel/despliegue.png)
 
 
-      ### Documentacion realizada por:
+      ### Documentación realizada por:
 
       - #### antoniorb1913
