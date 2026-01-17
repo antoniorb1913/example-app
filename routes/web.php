@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-//Route::get('/', function () {
-    //return redirect()->route('players.index');
-//})
 
+Route::get('/', function () {
+    return redirect()->route('players.index');
+});
 Route::resource('players', PlayerController::class);
 
+/*
 Route::get('/', function () {
     // Si no están los jugadores, lanzamos la limpieza y carga
     if (!Schema::hasTable('players')) {
@@ -21,12 +22,11 @@ Route::get('/', function () {
                 '--seed' => true 
             ]);
 
-            return "¡Neon configurado correctamente! <a href='".route('players.index')."'>Ver jugadores</a>";
+            return "¡configurado correctamente! <a href='".route('players.index')."'>Ver jugadores</a>";
         } catch (\Exception $e) {
-            // Esto te dirá el error real si algo falla
             return "Error en la instalación: " . $e->getMessage();
         }
     }
-
     return redirect()->route('players.index');
 });
+*/

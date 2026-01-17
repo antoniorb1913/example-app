@@ -190,9 +190,42 @@
 
       ![ilustracion 4](Image/vercel/despliegue.png)
 
+## CONFIGURACIÓN DE BASE DE DATOS Y AUTO-INSTALACIÓN
 
-      <hr>
+   1. **Base de Datos**: Se ha creado una instancia de PostgreSQL en Render.
+   2. Descomentar esto de router/web.php
 
-      ### Documentación realizada por:
+   <br>
 
-      - #### antoniorb1913
+   ```php
+   Route::get('/', function () {
+      // Si no están los jugadores, lanzamos la limpieza y carga automática
+      if (!Schema::hasTable('players')) {
+         try {
+               // 'migrate:fresh' limpia la estructura y '--seed' carga los datos iniciales
+               Artisan::call('migrate:fresh', [
+                  '--force' => true,
+                  '--seed' => true 
+               ]);
+
+               return "¡Base de datos configurada correctamente! <a href='".route('players.index')."'>Ver jugadores</a>";
+         } catch (\Exception $e) {
+               return "Error en la instalación: " . $e->getMessage();
+         }
+      }
+      // Si ya existe la estructura, redirige al listado principal
+      return redirect()->route('players.index');
+   });
+   ```
+   - Este código comprueba si la base de datos está vacía; si lo está, crea las tablas y mete los datos de prueba automáticamente, y si ya está todo listo, te manda directo a la lista de jugadores.
+
+   <br>
+   
+   3. Poner las Variable de entorno que genera servicio postgres de render en vercel (apartado 7 de este documento).
+
+   
+<hr>
+
+### Documentación realizada por:
+
+- #### antoniorb1913
