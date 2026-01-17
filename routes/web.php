@@ -13,22 +13,19 @@ Route::resource('players', PlayerController::class);
 
 Route::get('/setup-final', function () {
     try {
-        // 1. Forzamos una limpieza de la conexión actual
+        // 1. Limpiamos la conexión para olvidar cualquier error previo
         DB::purge();
         
-        // 2. Limpieza manual por si el DROP de la web de Neon no fue suficiente
-        // Borra el esquema público y lo recrea para asegurar 0 bloqueos
-        DB::statement('DROP SCHEMA public CASCADE');
-        DB::statement('CREATE SCHEMA public');
-        
-        // 3. Ahora que está vacío y sin bloqueos, migramos
-        Artisan::call('migrate', ['--force' => true]);
-        
-        // 4. Llenamos los datos de los jugadores
-        Artisan::call('db:seed', ['--force' => true]);
+        // 2. Ejecutamos la migración forzando el modo producción
+        // Usamos 'migrate:fresh' para que borre lo que haya quedado a medias
+        Artisan::call('migrate:fresh', [
+            '--force' => true,
+            '--seed' => true
+        ]);
 
-        return "¡CONSEGUIDO! Base de datos reseteada y sincronizada correctamente.";
+        return "¡ÉXITO! Tablas creadas y Seeders ejecutados correctamente.";
     } catch (\Exception $e) {
-        return "Error crítico: " . $e->getMessage();
+        // Si falla, queremos ver el error real de conexión, no el de la transacción
+        return "Error detallado: " . $e->getMessage();
     }
 });
