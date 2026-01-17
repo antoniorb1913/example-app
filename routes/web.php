@@ -1,31 +1,25 @@
 <?php
 
-use App\Http\Controllers\PlayerController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-
-Route::get('/', function () {
-    return redirect()->route('players.index');
-});
-
-Route::resource('players', PlayerController::class);
+use Illuminate\Support\Facades\Route;
 
 Route::get('/setup-final', function () {
     try {
-        // 1. Limpiamos la conexión para olvidar cualquier error previo
-        DB::purge();
-        
-        // 2. Ejecutamos la migración forzando el modo producción
-        // Usamos 'migrate:fresh' para que borre lo que haya quedado a medias
-        Artisan::call('migrate:fresh', [
-            '--force' => true,
-            '--seed' => true
-        ]);
+        // PASO A: Desconectar para resetear el error 25P02
+        DB::disconnect();
 
-        return "¡ÉXITO! Tablas creadas y Seeders ejecutados correctamente.";
+        // PASO B: Borrado manual desde PHP por si Neon no se limpió bien
+        // Esto vacía la base de datos completamente
+        DB::statement('DROP SCHEMA public CASCADE; CREATE SCHEMA public;');
+
+        // PASO C: Ejecutar migraciones y seeders
+        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('db:seed', ['--force' => true]);
+
+        return "¡POR FIN! Base de datos configurada y limpia.";
     } catch (\Exception $e) {
-        // Si falla, queremos ver el error real de conexión, no el de la transacción
-        return "Error detallado: " . $e->getMessage();
+        // Esto nos dirá si el problema es la CONTRASEÑA o el HOST
+        return "Error real de conexión: " . $e->getMessage();
     }
 });
