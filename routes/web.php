@@ -13,16 +13,20 @@ use Illuminate\Support\Facades\DB;
 Route::resource('players', PlayerController::class);
 
 Route::get('/', function () {
-    // Si no existe la tabla de jugadores, configuramos todo automáticamente
+    // Si no están los jugadores, lanzamos la limpieza y carga
     if (!Schema::hasTable('players')) {
         try {
-            Artisan::call('migrate', ['--force' => true]);
-            Artisan::call('db:seed', ['--force' => true]);
-            
-            return "Base de datos instalada automáticamente. Refresca la página.";
+            Artisan::call('migrate:fresh', [
+                '--force' => true,
+                '--seed' => true 
+            ]);
+
+            return "¡Neon configurado correctamente! <a href='".route('players.index')."'>Ver jugadores</a>";
         } catch (\Exception $e) {
-            return "Error en auto-instalación: " . $e->getMessage();
+            // Esto te dirá el error real si algo falla
+            return "Error en la instalación: " . $e->getMessage();
         }
     }
-    return view('welcome'); // O tu vista principal
+
+    return redirect()->route('players.index');
 });
