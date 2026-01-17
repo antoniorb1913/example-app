@@ -13,14 +13,14 @@ Route::resource('players', PlayerController::class);
 
 Route::get('/setup-final', function () {
     try {
-        // Cerramos conexiones previas bloqueadas
-        DB::disconnect(); 
+        // Forzamos el cierre de cualquier proceso pendiente
+        DB::disconnect();
         
-        // migrate:fresh borra las tablas con error y las crea de nuevo
+        // Ejecutamos la migración desde cero y el llenado de datos
         Artisan::call('migrate:fresh', ['--force' => true, '--seed' => true]);
-        
-        return "¡Práctica completada con éxito! Tablas creadas y datos cargados en Neon.";
+
+        return "¡Práctica completada! Tablas creadas y jugadores cargados en Neon.";
     } catch (\Exception $e) {
-        return "Error: " . $e->getMessage();
+        return "Error al configurar: " . $e->getMessage();
     }
 });
