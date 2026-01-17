@@ -181,7 +181,7 @@
 
          <br>
       
-      Pequeño inciso esto se puede poner tambien en el archivo "**.env**" o el el archivo "**vercel.json**" la cosa que configurar las variables en el panel de Vercel evita filtrar contraseñas en el historial de Git y permite mantener las credenciales locales del .env totalmente separadas de las de producción.
+      **Pequeño inciso** esto se puede poner tambien en el archivo "**.env**" o el el archivo "**vercel.json**" la cosa que configurar las variables en el panel de Vercel evita filtrar contraseñas en el historial de Git y permite mantener las credenciales locales del .env totalmente separadas de las de producción.
 
 
       Visualizacion del despligue.
@@ -190,6 +190,8 @@
 
       ![ilustracion 4](Image/vercel/despliegue.png)
 
+
+      <hr>
 
       ### Documentación realizada por:
 
