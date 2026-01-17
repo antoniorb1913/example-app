@@ -13,14 +13,22 @@ Route::resource('players', PlayerController::class);
 
 Route::get('/setup-final', function () {
     try {
-        // Forzamos el cierre de cualquier proceso pendiente
-        DB::disconnect();
+        // 1. Forzamos una limpieza de la conexión actual
+        DB::purge();
         
-        // Ejecutamos la migración desde cero y el llenado de datos
-        Artisan::call('migrate:fresh', ['--force' => true, '--seed' => true]);
+        // 2. Limpieza manual por si el DROP de la web de Neon no fue suficiente
+        // Borra el esquema público y lo recrea para asegurar 0 bloqueos
+        DB::statement('DROP SCHEMA public CASCADE');
+        DB::statement('CREATE SCHEMA public');
+        
+        // 3. Ahora que está vacío y sin bloqueos, migramos
+        Artisan::call('migrate', ['--force' => true]);
+        
+        // 4. Llenamos los datos de los jugadores
+        Artisan::call('db:seed', ['--force' => true]);
 
-        return "¡Práctica completada! Tablas creadas y jugadores cargados en Neon.";
+        return "¡CONSEGUIDO! Base de datos reseteada y sincronizada correctamente.";
     } catch (\Exception $e) {
-        return "Error al configurar: " . $e->getMessage();
+        return "Error crítico: " . $e->getMessage();
     }
 });
