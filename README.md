@@ -6,9 +6,10 @@
 
 ## PREPARACION Y CONFIGURACION EL PROYECTO:
 
-   - Funtes sacadas de "Medium" 
+   - Funtes sacadas de "Medium" y documentacion del Laravel.
      - https://rezamandala.medium.com/how-to-deploy-laravel-project-to-vercel-7b3c2800e974
      - https://cvallejo.medium.com/laravel-vercel-serverless-de-forma-simple-y-gratuita-d370f294530f
+     - https://laravel.com/docs/12.x/artisan
   
      ### 1. Crea una carpeta "api" en la raiz del proyecto.
 
