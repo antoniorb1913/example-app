@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 
-Route::get('/p', function () {
+Route::get('/', function () {
     return redirect()->route('players.index');
 });
 
