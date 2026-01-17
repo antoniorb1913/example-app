@@ -19,7 +19,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
     })
     ->create();
 
-// Obligatorio para Vercel
+// Esta línea es la que soluciona el "Read-only file system"
 $app->useStoragePath('/tmp');
 
 return $app;
