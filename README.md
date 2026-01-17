@@ -4,7 +4,7 @@
    - https://vercel.com/
 
 
-## PREPARACION Y CONFIGURACION EL PROYECTO EN VS CODE:
+## PREPARACION Y CONFIGURACION EL PROYECTO:
 
    - Funte sacada de "Medium" https://rezamandala.medium.com/how-to-deploy-laravel-project-to-vercel-7b3c2800e974
   
@@ -77,6 +77,7 @@
         - **¿Por qué?** Vercel tiene un sistema de archivos de "solo lectura". La carpeta /tmp es el único lugar donde Laravel tiene permiso para escribir archivos temporales.
   
       ### Una vez configurado todo esto, subelo al proyecto de github.
+   
 
      ### 6. Configurar el directorio de salida en Vercel:
 
