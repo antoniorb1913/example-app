@@ -6,22 +6,11 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-Route::get('/p', function () {
-    return redirect()->route('players.index');
-});
-
-Route::resource('players', PlayerController::class);
-
 Route::get('/', function () {
-    // Si no existe la tabla de jugadores, configuramos todo automáticamente
     if (!Schema::hasTable('players')) {
-        try {
-            Artisan::call('migrate', ['--force' => true]);
-            Artisan::call('db:seed', ['--force' => true]);
-            return "Base de datos instalada automáticamente. Refresca la página.";
-        } catch (\Exception $e) {
-            return "Error en auto-instalación: " . $e->getMessage();
-        }
+        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('db:seed', ['--force' => true]);
+        return "¡Base de datos configurada automáticamente! <a href='/players'>Ver Jugadores</a>";
     }
-    return view('welcome'); // O tu vista principal
+    return view('welcome');
 });
