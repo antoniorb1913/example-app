@@ -1,73 +1,181 @@
-## FUNCIONAMIENTO EN ENTORNO LOCAL:
+## CONFIGURACION Y FUNCIONAMIENTO DESPLIGUE EN VERCEL:
 
-### Para ejecutar el proyecto utilizando Laravel Herd:
+### Antes de empezar iniciar sesion / registrarse en vercel.
+   - https://vercel.com/
 
-1. **Importar proyecto a Herd** Selecciona la opción para añadir un nuevo sitio.
-   
-   ![ilustracion 1](Image/herd1.png)
 
-2. **Seleccionar "Link existing project"** Busca la carpeta donde has clonado el repositorio.
-   
-   ![ilustracion 2](Image/herd2.png)
+## PREPARACION Y CONFIGURACION EL PROYECTO EN VS CODE:
 
-3. **Configurar nombre y versión** Asigna el nombre al proyecto y asegúrate de usar **PHP 8.4**.
-   
-   ![ilustracion 3](Image/herd3.png)
-
-4. **Migraciones y Datos de prueba** Ejecuta el siguiente comando en tu terminal para crear las tablas y cargar los jugadores de ejemplo:
-   
-   ```bash
-   php artisan migrate:fresh --seed
-
-5. **Levantar docker-compose.local.yml** levantar el docker local para que carge el contenedor de postgres de la base de datos.
-   - Asegúrate de que el puerto de la base de datos en el .env coincida con el del docker-compose.local.yml (5432)
-
-   ```bash
-   docker compose -f docker-compose.local.yml up --build
-
+   - Funte sacada de "Medium" https://rezamandala.medium.com/how-to-deploy-laravel-project-to-vercel-7b3c2800e974
   
-6. **Acceso y Verificación Entramos a la URL** y el programa esta arrancado y funcionando.
+     ### 1. Crea una carpeta "api" en la raiz del proyecto.
 
-  ![ilustracion 4](Image/herd.png)
+     ### 2. Dentro de la carpeta creamos un archivo "index.php"
 
-  ![ilustracion 5](Image/funcionando.png)
-
-
-
-### Para ejecutar el proyecto utilizando sin tener Laravel Herd:
-
-1. **Migraciones y Datos de prueba** Ejecuta el siguiente comando en tu terminal para crear las tablas y cargar los jugadores de ejemplo:
+      ![ilustracion 1](Image/vercel/api.png)
+      
+      <br>
+      
+     ### 3. Añade este contenido dentro de la carpeta index.php:
    
-   ```bash
-   php artisan migrate --seed
+         ```php
+               <?php
+               require __DIR__ . '/../public/index.php';
+         ```
 
-2. **Levantamos el proyecto"** Ejecuta el siguiente comando en tu terminal para levantar el proyecto.
+      - **¿Qué hace?** Redirige todas las peticiones que recibe Vercel hacia el archivo principal de Laravel en la carpeta public.
+      
+      <br>
 
-   ```bash
-   php artisan serve
-
-## FUNCIONAMIENTO EN ENTORNO DEV:
-
-5. **Levantar docker-compose.dev.yml** levantar el docker dev para que carge el contenedor de postgres de la base de datos y laravel.
-
-   ```bash
-   docker compose -f docker-compose.dev.yml up --build -d
-
-- Para que el entorno dev funcione hace falta el archivo .dockerignore para que ignore las variable de entorno locales y no intente conectarse a ellas y el Dockerfile.
-
-- Entrar a la ruta http://localhost:8080/players y deberia funcinar correctamnete
-
-## RENDER
-
-   - Crear un servicio de postgres y otro servicio web services.
-     - Ponemos las variables que apunten al servicio de postgres creado en render
-   
-   ![ilustracion 6](Image/variables-render.png)
-
-
-   - Funcionamiento de render.
+     ### 4. Crear .vercelignore: Crea este archivo en la raíz y añade:
+      
+         ```bash
+               /vendor
+         ```
+      - **¿Qué hace?** Evita que subas la carpeta de dependencias a Vercel; la plataforma las instalará automáticamente durante el despliegue.
   
-  ![ilustracion 6](Image/render.png)
+      <br>
 
-  - Enlace de render:
-      - https://example-app-gsfk.onrender.com
+     ### 5. Crear vercel.json: Crea este archivo en la raíz y añade:
+   
+      ```json
+            {
+               "version": 2,
+                  "framework": null,
+               "functions": {
+                  "api/index.php": { "runtime": "vercel-php@0.7.1" }
+               },
+               "routes": [{
+                  "src": "/(.*)",
+                  "dest": "/api/index.php"
+               }],
+               "env": {
+                  "APP_ENV": "production",
+                  "APP_DEBUG": "true",
+                  "APP_URL": "https://example-9pp5npl8y-antonios-projects-70787aa3.vercel.app/",
+
+                  "APP_CONFIG_CACHE": "/tmp/config.php",
+                  "APP_EVENTS_CACHE": "/tmp/events.php",
+                  "APP_PACKAGES_CACHE": "/tmp/packages.php",
+                  "APP_ROUTES_CACHE": "/tmp/routes.php",
+                  "APP_SERVICES_CACHE": "/tmp/services.php",
+                  "VIEW_COMPILED_PATH": "/tmp",
+
+                  "CACHE_DRIVER": "array",
+                  "LOG_CHANNEL": "stderr",
+                  "SESSION_DRIVER": "cookie"
+               }
+            }
+      ```
+
+      - **Runtime**: Define el motor de PHP (ej. vercel-php@0.7.1) para procesar el código.
+
+      - **Routes**: Configura que cualquier URL (/(.*)) sea procesada por el archivo que creamos en /api/index.php.
+
+      - **Variables de Entorno (env)**: * Redirige todas las rutas de caché (APP_CONFIG_CACHE, VIEW_COMPILED_PATH, etc.) a la carpeta /tmp.
+
+        - **¿Por qué?** Vercel tiene un sistema de archivos de "solo lectura". La carpeta /tmp es el único lugar donde Laravel tiene permiso para escribir archivos temporales.
+  
+      ### Una vez configurado todo esto, subelo al proyecto de github.
+
+     ### 6. Configurar el directorio de salida en Vercel:
+
+     - Creamos una carpeta **dist** en la raiz para engañar al sistema, ya que sin esa carpeta vercel no se despliega pero realmente no se usara ya que laravel no la utiliza, en su defecto usa la carpeta public que vamos a configurarla en vercel:
+  
+      <br>
+  
+      1. Desplegamos el proyecto usando este comando:
+
+         ```vercel
+               vercel .
+         ```
+
+         ? Set up and deploy “~\Herd\example-app”? **yes**
+         <br>
+
+         ? Which scope should contain your project? **vuestro proyecto**
+         <br>
+         
+         ? Link to existing project? **no**
+         <br>
+
+         ? What’s your project’s name? **nombre de vuestro proyecto**
+         <br>
+
+         ? In which directory is your code located? **./**
+         <br>
+
+         ? Want to modify these settings? **no**
+         <br>
+
+         ? Do you want to change additional project settings? **no**
+         🔗  Linked to antonios-projects-70787aa3/example-app (created .vercel)
+         <br>
+
+         ? Detected a repository. Connect it to this project? **yes**
+         > Connecting GitHub repository: https://github.com/antoniorb1913/example-app
+         > Connected
+
+      <br>
+
+      2. Configurar la carpeta **public**:
+
+         1. Entramos nuestro proyecto en vercel.
+
+            ![ilustracion 2](Image/vercel/proyecto.png)
+         
+         <br>
+
+         2. Entramos a "settings".
+  
+            ![ilustracion 2](Image/vercel/settings.png)
+
+         <br>
+         
+         3. En los ajustes:
+
+            1. Entramos a "Build and Deployment".
+            2. Dentro de "Framework Settings" En el apartado "Framework Preset" seleccionamos "Other".
+            3. Activamos el apartado "Output Directory" y ponemos "public".
+            4. Guardamos "save".
+  
+               ![ilustracion 2](Image/vercel/public.png)
+   
+               ¿Por qué?: Laravel usa la carpeta public para proteger el código fuente y servir el archivo index.php de forma segura.
+
+         <br>
+
+         - **Con esto ya estaria hecho el despligue**, si intentamos entrar a la web de despligue no saldra nada solo errores, ya que no nos hemos conectado a una base de datos.
+
+
+     ### 7. Conexion con la base de datos:
+
+      En este caso me conectare a una base de datos postgres previamente configurada en render, pero bueno para la conexion es igual en todas.
+
+      1. Entramos en ajustes:
+
+         1. Entramos a "Environment Variables".
+         2. Damos en "Add Environment Variable".
+         3. Añadimos las variables para conectarnos con la base de datos.
+
+      ![ilustracion 2](Image/vercel/variables.png)
+
+      - Variables.
+
+         **APP_KEY**: Esta se saca del archivo ".env" del proyecto
+
+         **DB_CONNECTION**: pgsql (que base de datos es (Postres, MySQL, ...etc))
+
+         **DB_HOST**: host / dominio
+
+         **DB_PORT**: 5432
+
+         **DB_DATABASE**: Nombre de la base de datos
+
+         **DB_USERNAME**: El usuario
+
+         **DB_PASSWORD**: La contraseña
+
+         <br>
+      
+      Pequeño inciso esto se puede poner tambien en el archivo "**.env**" o el el archivo "**vercel.json**" la cosa que configurar las variables en el panel de Vercel evita filtrar contraseñas en el historial de Git y permite mantener las credenciales locales del .env totalmente separadas de las de producción.
