@@ -195,10 +195,11 @@
   <br>
 
    ```php
-   // Esta línea arregla el error de "Read-only file system"
-   $app->useStoragePath('/tmp');
-
-   return $app;
+   // Comprueba en el archivo vercel.json si esta en producción.
+      if (env('APP_ENV') === 'production') {
+         $app->useStoragePath('/tmp');
+      }
+      return $app;
    ```
 
    <br>
