@@ -189,7 +189,7 @@
    
    Error debido a que la arquitectura de Vercel impide escribir en la carpeta storage del proyecto.
 
-   - **Solución**: Se implementó $app->useStoragePath('/tmp'); para utilizar el directorio temporal /tmp, único espacio con permisos de escritura permitidos en entornos Serverless.
+   - **Solución**: Se implementó **$app->useStoragePath('/tmp')**; para utilizar el directorio temporal /tmp, único espacio con permisos de escritura permitidos en entornos Serverless.
    - Poner esto al final de archivo **bootstrap / app.php**
 
   <br>
