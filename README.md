@@ -1,8 +1,18 @@
 ## CONFIGURACION Y FUNCIONAMIENTO DESPLIGUE EN VERCEL:
 
-### Antes de empezar iniciar sesion / registrarse en vercel.
+### Antes de empezar iniciar sesion / registrarse en vercel y instalar vercel.
    - https://vercel.com/
+   - Crear un espacio de trabajo.
+   - Terminal VS Code:
+      <br>
 
+      ```bash
+      //instalar vercel
+      npm install -g vercel
+
+      // iniciar sesion
+      vercel login
+      ```
 
 ## PREPARACION Y CONFIGURACION EL PROYECTO:
 
@@ -10,7 +20,7 @@
      - https://rezamandala.medium.com/how-to-deploy-laravel-project-to-vercel-7b3c2800e974
      - https://cvallejo.medium.com/laravel-vercel-serverless-de-forma-simple-y-gratuita-d370f294530f
      - https://laravel.com/docs/12.x/artisan
-  
+
      ### 1. Crea una carpeta "api" en la raiz del proyecto.
 
      ### 2. Dentro de la carpeta creamos un archivo "index.php"
