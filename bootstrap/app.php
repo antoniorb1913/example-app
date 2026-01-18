@@ -16,10 +16,4 @@ $app = Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })
-    ->create();
-
-// Esta línea arregla el error de "Read-only file system"
-$app->useStoragePath('/tmp');
-
-return $app;
+    })->create();
