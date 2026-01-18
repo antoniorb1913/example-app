@@ -10,7 +10,6 @@
      - https://rezamandala.medium.com/how-to-deploy-laravel-project-to-vercel-7b3c2800e974
      - https://cvallejo.medium.com/laravel-vercel-serverless-de-forma-simple-y-gratuita-d370f294530f
      - https://laravel.com/docs/12.x/artisan
-     - https://stackoverflow.com/questions/77894089/facing-issue-while-deploying-laravel-project-on-vercel-ready-only-file-system
   
      ### 1. Crea una carpeta "api" en la raiz del proyecto.
 
