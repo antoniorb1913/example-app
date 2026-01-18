@@ -185,12 +185,29 @@
       
       **Pequeño inciso** esto se puede poner tambien en el archivo "**.env**" o el el archivo "**vercel.json**" la cosa que configurar las variables en el panel de Vercel evita filtrar contraseñas en el historial de Git y permite mantener las credenciales locales del .env totalmente separadas de las de producción.
 
+ ### Error Read-only file system 
+   
+   Error debido a que la arquitectura de Vercel impide escribir en la carpeta storage del proyecto.
 
-      Visualizacion del despligue.
+   - **Solución**: Se implementó $app->useStoragePath('/tmp'); para utilizar el directorio temporal /tmp, único espacio con permisos de escritura permitidos en entornos Serverless.
+   - Poner esto al final de archivo **bootstrap / app.php**
 
-      https://example-lo3dryhuk-antonios-projects-70787aa3.vercel.app
+  <br>
 
-      ![ilustracion 4](Image/vercel/despliegue.png)
+   ```php
+   // Esta línea arregla el error de "Read-only file system"
+   $app->useStoragePath('/tmp');
+
+   return $app;
+   ```
+
+   <br>
+
+   Visualizacion del despligue.
+
+   https://example-lo3dryhuk-antonios-projects-70787aa3.vercel.app
+
+   ![ilustracion 4](Image/vercel/despliegue.png)
 
 ## CONFIGURACIÓN DE BASE DE DATOS Y AUTO-INSTALACIÓN
 
